@@ -1,0 +1,30 @@
+<section tabIndex="-1"
+  [attr.aria-label]="options.globalOptions.containerAriaLabel"
+>
+  <ol
+    #toastsList
+    data-sonner-toaster
+    [attr.tabIndex]="-1"
+    [attr.data-rich-colors]="options.globalOptions.richColors"
+    [attr.data-theme]="theme"
+    [attr.data-y-position]="position[0]"
+    [attr.data-x-position]="position[1]"
+    [class]="options.globalOptions.containerClassName"
+    [ngStyle]="{
+      '--front-toast-height': frontToastHeight(),
+      '--offset': options.globalOptions.viewportOffset,
+      '--width': options.globalOptions.toastWidth,
+      '--gap': options.globalOptions.gap
+    }"
+  >
+    @for (toast of state.toasts(); track toast.id) {
+      <!-- position Input is here only for future refactor -->
+      <sonner-toast
+        [toast]="toast"
+        [position]="options.globalOptions.position"
+        [interacting]="interacting()"
+        [expanded]="expanded()" />
+    }
+  </ol>
+</section>
+

@@ -27,17 +27,18 @@ export type ToastOptions = GlobalToastOptions & Partial<{
 }>;
 
 export type InternalToastOptions = ToastOptions & {
+  id: number;
   type: ToastType;
   content: ToastContent;
 };
 
 export type GlobalToastOptions = {
   dismissible: boolean;
-  position: Position;
   duration: number;
   closeButton: boolean;
-  richColors: boolean;
 };
+
+export type SonnerTheme = 'system' | 'light' | 'dark';
 
 export type GlobalOptions = {
   visibleToastsAmount: number;
@@ -46,6 +47,14 @@ export type GlobalOptions = {
   gap: string;
   swipeTreshold: number;
   timeBeforeUnmount: number;
+  position: Position;
+  containerAriaLabel: string;
+  theme: SonnerTheme;
+  richColors: boolean;
+  expandByDefault: boolean;
+  invert: boolean;
+  hotKeys: string[];
+  containerClassName?: string;
 };
 
 export type ToastContent = TemplateRef<any> | Type<any> | string;

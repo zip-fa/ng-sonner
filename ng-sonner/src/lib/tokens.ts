@@ -3,10 +3,8 @@ import { InjectionToken, Provider } from '@angular/core';
 import { GlobalToastOptions, GlobalOptions } from './types';
 
 const DEFAULT_TOAST_OPTIONS: GlobalToastOptions = {
-  position: 'bottom-right',
   duration: 4000,
   closeButton: false,
-  richColors: false,
   dismissible: true
 };
 
@@ -16,7 +14,14 @@ const DEFAULT_OPTIONS: GlobalOptions = {
   toastWidth: '356px',
   gap: '14px',
   swipeTreshold: 20,
-  timeBeforeUnmount: 200
+  timeBeforeUnmount: 200,
+  position: 'bottom-right',
+  containerAriaLabel: 'Notifications alt+T',
+  hotKeys: ['altKey', 'KeyT'],
+  theme: 'light',
+  richColors: false,
+  expandByDefault: false,
+  invert: false
 };
 
 type ProvidedOptions = {

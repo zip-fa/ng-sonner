@@ -1,2 +1,2 @@
 export { SonnerService } from './lib/sonner.service';
-export { SonnerRootComponent } from './lib/components/sonner-root/sonner-root.component';
+export { SonnerContainerComponent } from './lib/components/sonner-container/sonner-container.component';

@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 
-import { SonnerRootComponent, SonnerService } from '@zip-fa/ng-sonner';
+import { SonnerContainerComponent, SonnerService } from '@zip-fa/ng-sonner';
 
 @Component({
   standalone: true,
-  imports: [SonnerRootComponent],
+  imports: [SonnerContainerComponent],
   selector: 'ng-sonner-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
