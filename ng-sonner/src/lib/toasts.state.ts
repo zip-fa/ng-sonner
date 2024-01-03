@@ -13,6 +13,19 @@ export class ToastsState {
     ]);
   }
 
+  updateToast(id: number, data: Partial<InternalToastOptions>): void {
+    this.toasts.update((toasts) => {
+      const index = toasts.findIndex((toast) => toast.id === id);
+
+      toasts[index] = {
+        ...toasts[index],
+        ...data
+      };
+
+      return toasts;
+    });
+  }
+
   removeToast(id: number): void {
     this.toasts.update((toasts) => toasts.filter((toast) => toast.id !== id));
   }

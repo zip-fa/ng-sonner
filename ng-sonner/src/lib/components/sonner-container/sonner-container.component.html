@@ -18,12 +18,52 @@
     }"
   >
     @for (toast of state.toasts(); track toast.id) {
-      <!-- position Input is here only for future refactor -->
-      <sonner-toast
-        [toast]="toast"
-        [position]="options.globalOptions.position"
-        [interacting]="interacting()"
-        [expanded]="expanded()" />
+      <li
+        #toastRefs
+        [attr.aria-live]="toast.important ? 'assertive' : 'polite'"
+        aria-atomic="true"
+        role="status"
+        tabIndex="0"
+        data-sonner-toast
+        [attr.data-styled]="
+          !(toast.nonStringContent || toast.unstyled || options.globalOptions.unstyled) ?
+            'true' :
+            'false'
+        "
+        [attr.data-toast-id]="toast.id"
+        [attr.data-rendered]="toast.isRendered ? 'true' : 'false'"
+        [attr.data-async]="toast.isAsync"
+        [attr.data-removed]="toast.isRemoved"
+        [attr.data-visible]="$index + 1 <= options.globalOptions.visibleToasts"
+        [attr.data-y-position]="position[0]"
+        [attr.data-x-position]="position[1]"
+        [attr.data-front]="0 === $index"
+        [attr.data-index]="$index"
+        [attr.data-swiping]="toast.isSwiping"
+        [attr.data-dismissible]="toast.dismissible"
+        [attr.data-type]="toast.type"
+        [attr.data-invert]="options.globalOptions.invert"
+        [attr.data-swipe-out]="toast.isSwipingOut"
+        [attr.data-expanded]="
+          expanded() || (options.globalOptions.expandByDefault && toast.isRendered) ?
+            'true' :
+            'false'
+        "
+        [ngStyle]="{
+          '--index': $index,
+          '--toasts-before': $index,
+          '--z-index': state.toasts().length - $index,
+          '--offset': (toast.isRemoved ? toast.offsetBeforeRemove : toast.offset) +'px',
+          '--initial-height': options.globalOptions.expandByDefault ? 'auto' : toast.initialHeight +'px'
+        }"
+      >
+        <!-- TODO: position Input is here only for future refactor -->
+        <sonner-toast
+          [toast]="toast"
+          [position]="options.globalOptions.position"
+          [interacting]="interacting()"
+          [expanded]="expanded()" />
+      </li>
     }
   </ol>
 </section>

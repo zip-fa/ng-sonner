@@ -9,6 +9,19 @@ import {
 import { SONNER_OPTIONS_TOKEN } from './tokens';
 import { ToastsState } from './toasts.state';
 
+type CreateToastOptions = Omit<InternalToastOptions,
+  'id' |
+  'nonStringContent' |
+  'isAsync' |
+  'isRemoved' |
+  'isSwiping' |
+  'isSwipingOut' |
+  'isRendered' |
+  'initialHeight' |
+  'offset' |
+  'offsetBeforeRemove'
+>;
+
 @Injectable({ providedIn: 'root' })
 export class SonnerService {
   private readonly options = inject(SONNER_OPTIONS_TOKEN);
@@ -61,11 +74,20 @@ export class SonnerService {
     });
   }
 
-  private create(options: Omit<InternalToastOptions, 'id'>): CreatedToast {
+  private create(options: CreateToastOptions): CreatedToast {
     this.lastId++;
 
     const toast: InternalToastOptions = {
       id: this.lastId,
+      nonStringContent: typeof options.content !== 'string',
+      isAsync: false, // TODO
+      isRemoved: false,
+      isSwiping: false,
+      isSwipingOut: false,
+      isRendered: false,
+      initialHeight: 0,
+      offset: 0,
+      offsetBeforeRemove: 0,
       ...options
     };
 

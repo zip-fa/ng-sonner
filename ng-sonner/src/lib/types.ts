@@ -22,6 +22,8 @@ export type ToastAction = {
 };
 
 export type ToastOptions = GlobalToastOptions & Partial<{
+  important: boolean;
+  unstyled: boolean;
   description: string;
   action: ToastAction;
 }>;
@@ -30,6 +32,15 @@ export type InternalToastOptions = ToastOptions & {
   id: number;
   type: ToastType;
   content: ToastContent;
+  nonStringContent: boolean;
+  initialHeight: number; // TODO: consider moving this to component
+  offset: number; // TODO: consider moving this to component
+  offsetBeforeRemove: number; // TODO: consider moving this to component
+  isAsync: boolean;
+  isRemoved: boolean; // TODO: consider moving this to component
+  isSwiping: boolean; // TODO: consider moving this to component
+  isSwipingOut: boolean; // TODO: consider moving this to component
+  isRendered: boolean; // TODO: consider moving this to component
 };
 
 export type GlobalToastOptions = {
@@ -41,7 +52,7 @@ export type GlobalToastOptions = {
 export type SonnerTheme = 'system' | 'light' | 'dark';
 
 export type GlobalOptions = {
-  visibleToastsAmount: number;
+  visibleToasts: number;
   viewportOffset: string;
   toastWidth: string;
   gap: string;
@@ -51,6 +62,7 @@ export type GlobalOptions = {
   containerAriaLabel: string;
   theme: SonnerTheme;
   richColors: boolean;
+  unstyled: boolean;
   expandByDefault: boolean;
   invert: boolean;
   hotKeys: string[];

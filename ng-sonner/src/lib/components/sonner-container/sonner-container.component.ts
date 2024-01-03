@@ -2,20 +2,21 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  computed, effect,
+  computed,
+  effect,
   ElementRef,
   inject,
-  NgZone,
   QueryList,
-  signal, untracked,
+  signal,
+  untracked,
   ViewChild,
   ViewChildren
 } from '@angular/core';
+import { DOCUMENT, NgStyle } from '@angular/common';
+import { filter, fromEvent, race } from 'rxjs';
 
 import { SONNER_OPTIONS_TOKEN } from '../../tokens';
 import { ToastComponent } from '../toast/toast.component';
-import { DOCUMENT, NgStyle } from '@angular/common';
-import { filter, fromEvent, merge } from 'rxjs';
 import { guessTheme, isNotDismissible } from '../../helpers';
 import { ToastsState } from '../../toasts.state';
 
@@ -32,14 +33,13 @@ import { ToastsState } from '../../toasts.state';
 })
 export class SonnerContainerComponent implements AfterViewInit {
   protected readonly state = inject(ToastsState);
-  protected readonly ngZone = inject(NgZone);
   protected readonly options = inject(SONNER_OPTIONS_TOKEN);
   protected readonly document = inject(DOCUMENT);
   protected readonly position = this.options.globalOptions.position.split('-');
   protected readonly theme = guessTheme(this.options.globalOptions.theme);
 
-  @ViewChildren(ToastComponent)
-  protected toasts!: QueryList<ToastComponent>;
+  @ViewChildren('toastRefs')
+  protected toasts!: QueryList<ElementRef<HTMLElement>>;
 
   @ViewChild('toastsList', { static: true })
   protected toastsList!: ElementRef<HTMLElement>;
@@ -77,15 +77,15 @@ export class SonnerContainerComponent implements AfterViewInit {
     const result: Record<number, number> = {};
 
     this.toasts.forEach((toast) => {
-      if (result[toast.toast.id]) {
+      const id = Number(toast.nativeElement.dataset['dismissible'] as string);
+
+      if (result[id]) {
         return;
       }
 
-      const { height } = toast.elementRef
-        .nativeElement
-        .getBoundingClientRect();
+      const { height } = toast.nativeElement.getBoundingClientRect();
 
-      result[toast.toast.id] = height;
+      result[id] = height;
     });
 
     this.heights.set(result);
@@ -96,6 +96,7 @@ export class SonnerContainerComponent implements AfterViewInit {
       return;
     }
 
+    // TODO: check what needs to be wrapped with runOutsideAngular
     this.listenBlurEvent();
     this.listenFocusEvent();
     this.listenPointerEvents();
@@ -142,17 +143,27 @@ export class SonnerContainerComponent implements AfterViewInit {
   }
 
   private listenPointerEvents(): void {
+    console.log('listen pointers');
+
     const { nativeElement } = this.toastsList;
 
-    merge(
+    race(
       fromEvent(nativeElement, 'mouseEnter'),
       fromEvent(nativeElement, 'mouseMove')
     )
-      .subscribe(() => this.expanded.set(true));
+      .subscribe(() => {
+        console.log('mouseEnter / mouseMove');
+
+        this.expanded.set(true);
+      });
 
     fromEvent(nativeElement, 'mouseLeave')
       .pipe(filter(() => !this.interacting()))
-      .subscribe(() => this.expanded.set(false));
+      .subscribe(() => {
+        console.log('mouseLeave');
+
+        this.expanded.set(false);
+      });
 
     fromEvent(nativeElement, 'pointerDown')
       .pipe(filter((event) => !isNotDismissible(event as FocusEvent)))

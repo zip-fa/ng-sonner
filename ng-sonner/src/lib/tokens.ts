@@ -9,7 +9,7 @@ const DEFAULT_TOAST_OPTIONS: GlobalToastOptions = {
 };
 
 const DEFAULT_OPTIONS: GlobalOptions = {
-  visibleToastsAmount: 3,
+  visibleToasts: 3,
   viewportOffset: '32px',
   toastWidth: '356px',
   gap: '14px',
@@ -21,7 +21,8 @@ const DEFAULT_OPTIONS: GlobalOptions = {
   theme: 'light',
   richColors: false,
   expandByDefault: false,
-  invert: false
+  invert: false,
+  unstyled: false
 };
 
 type ProvidedOptions = {
