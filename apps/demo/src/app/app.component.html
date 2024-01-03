@@ -1,4 +1,4 @@
-<div class="wrapper light">
+<div class="wrapper dark">
   <main class="container">
     <div class="hero_wrapper__OCEHr">
       <div class="hero_toastWrapper__AO_Px">
@@ -6,11 +6,17 @@
         <div class="hero_toast__iNtuW"></div>
         <div class="hero_toast__iNtuW"></div>
       </div>
+
       <h1 class="hero_heading__a4lh_">Sonner</h1>
       <p style="margin-top:0;font-size:18px">An opinionated toast component for React.</p>
-      <div class="hero_buttons__cVbFb"><button data-primary="" class="hero_button__bpL8r">Render a toast</button><a class="hero_button__bpL8r" href="https://github.com/emilkowalski/sonner" target="_blank">GitHub</a></div>
+      <div class="hero_buttons__cVbFb">
+        <button class="button" (click)="openToast()">Render a toast</button>
+        <a class="hero_button__bpL8r" href="https://github.com/emilkowalski/sonner" target="_blank">GitHub</a>
+      </div>
+
       <a class="hero_link__7stGB" href="/getting-started">Documentation</a>
     </div>
+
     <div class="content">
       <div>
         <h2>Installation</h2>
@@ -64,10 +70,10 @@
     <div class="container">
       <p class="footer_p__ajAR0">
         <img alt="Emil&#x27;s profile picture" loading="lazy" width="24" height="24" decoding="async" data-nimg="1" style="color:transparent" srcSet="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Femil.cef7d314.jpeg&amp;w=32&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Femil.cef7d314.jpeg&amp;w=48&amp;q=75 2x" src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Femil.cef7d314.jpeg&amp;w=48&amp;q=75"/>
-        <span>
-                        Made by<!-- --> <a href="https://twitter.com/emilkowalski_" target="_blank">Emil.</a>
-                     </span>
+        <span>Made by<!-- --> <a href="https://twitter.com/emilkowalski_" target="_blank">Emil.</a></span>
       </p>
     </div>
   </footer>
 </div>
+
+<sonner-root />
